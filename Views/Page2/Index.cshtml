@@ -1,0 +1,23 @@
+﻿@model List<WebApplication1.Models.UserFood>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Food</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var userFood in Model)
+        {
+                <tr>
+                    <td>@userFood.Name</td>
+                    <td>@userFood.Email</td>
+                    <td>@(ViewBag.FoodNames.ContainsKey(userFood.FoodId) ? ViewBag.FoodNames[userFood.FoodId] : "Unknown")</td>
+                    <td>@userFood.Date.ToString("g")</td>
+                </tr>
+        }
+    </tbody>
+</table>
