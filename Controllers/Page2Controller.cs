@@ -40,8 +40,8 @@ public class Page2Controller : Controller
 
 
         // User Info
-        var user = users[userFoods.FirstOrDefault().UserId];
         var food = userFoods.FirstOrDefault();
+        var user = users[food.UserId];
         var foodName = foods[food.FoodId];
         var today_cntr = userFoods
             .Where(f => f.Date.Day == DateTime.Now.Day && 
