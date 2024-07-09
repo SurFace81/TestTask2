@@ -16,8 +16,7 @@
     public class UserFood
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
+        public int UserId {  get; set; }
         public int FoodId { get; set; }
         public DateTime Date { get; set; }
     }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApplication1;
 using WebApplication1.Models;
 
 public class Page1Controller : Controller
@@ -25,10 +26,25 @@ public class Page1Controller : Controller
             return BadRequest(ModelState);
         }
 
+        Settings.registered = true;
+        var user = _context.Users.FirstOrDefault(u => u.Name == model.Name && u.Email == model.Email);
+
+        if (user == null)
+        {
+            user = new User
+            {
+                Name = model.Name,
+                Email = model.Email
+            };
+            _context.Users.Add(user);
+            _context.SaveChanges();
+
+            Settings.registered = false;
+        }
+
         var userFood = new UserFood
         {
-            Name = model.Name,
-            Email = model.Email,
+            UserId = user.Id,
             FoodId = model.DishId,
             Date = DateTime.Now
         };
@@ -36,8 +52,6 @@ public class Page1Controller : Controller
         _context.UserFoods.Add(userFood);
         _context.SaveChanges();
 
-        //return Ok();
-        //return RedirectToAction("Index", "Page2");
         return Ok(new { redirectTo = Url.Action("Index", "Page2") });
     }
 }

@@ -65,7 +65,7 @@
             function addDish() {
                 var valid = true;
                 dishName.removeClass("ui-state-error");
-                tips.removeClass("error");
+                updateTips("");
 
                 var newDish = { Name: dishName.val() };
 
@@ -80,12 +80,13 @@
                     },
                     error: function (jqXHR) {
                         dishName.addClass("ui-state-error");
-                        tips.text(jqXHR.responseText).addClass("error");
+                        updateTips(jqXHR.responseText);
                     }
                 });
 
                 return valid;
             }
+
 
             dishDialog = $("#dish-dialog-form").dialog({
                 autoOpen: false,
@@ -114,6 +115,7 @@
                 dishDialog.dialog("open");
             });
 
+            
             $("#tell-food").button().on("click", function () {
                 if (name.val() && email.val() && dish.val()) {
                     var formData = {
@@ -137,9 +139,14 @@
                         }
                     });
                 } else {
-                    updateTips("All form fields are required.");
+                    if (!name.val()) {
+                        updateTips("Name - пустое поле.");
+                    } else if (!email.val()) {
+                        updateTips("Email - пустое поле.");
+                    }
                 }
             });
+
         });
     </script>
 </head>
@@ -154,7 +161,6 @@
                 <input type="text" name="email" id="email" class="text ui-widget-content ui-corner-all">
                 <label for="dish">Dish</label>
                 <select name="dish" id="dish" class="ui-widget-content ui-corner-all">
-                    <option value="">Select a dish</option>
                     @foreach (var food in ViewBag.FoodList)
                     {
                             <option value="@food.Id">@food.Name</option>

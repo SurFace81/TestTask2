@@ -1,22 +1,20 @@
-﻿@model List<WebApplication1.Models.UserFood>
+﻿@model WebApplication1.Models.Page2ViewModel
+
+<div>
+    @if (Model.UserInfo != null)
+    {
+        <p>@Model.UserInfo</p>
+    }
+</div>
+
+<h4>Также люди едят:</h4>
 
 <table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Food</th>
-            <th>Date</th>
-        </tr>
-    </thead>
     <tbody>
-        @foreach (var userFood in Model)
+        @foreach (var userFood in Model.Users)
         {
                 <tr>
-                    <td>@userFood.Name</td>
-                    <td>@userFood.Email</td>
-                    <td>@(ViewBag.FoodNames.ContainsKey(userFood.FoodId) ? ViewBag.FoodNames[userFood.FoodId] : "Unknown")</td>
-                    <td>@userFood.Date.ToString("g")</td>
+                    <td>@userFood</td>
                 </tr>
         }
     </tbody>
